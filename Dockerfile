@@ -1,27 +1,21 @@
-FROM ubuntu:14.04
-MAINTAINER Sven Hartmann <sid@sh87.net>
+FROM java:8
+MAINTAINER Francis Belanger "francis.belanger@gmail.com"
 
-ENV DEBIAN_FRONTEND noninteractive
-ENV HOME /root
-
-RUN apt-mark hold initscripts udev plymouth mountall
-RUN dpkg-divert --local --rename --add /sbin/initctl && ln -sf /bin/true /sbin/initctl
-
-RUN apt-get update \
-    && apt-get install -y --force-yes software-properties-common \
-        openssh-server sudo \
-        net-tools \
-#        lxde-core lxde-icon-theme x11vnc xvfb screen openbox \
-        nodejs \
-#        firefox \
-	htop bmon nano wget \
-    && apt-get autoclean \
-    && apt-get autoremove \
-    && rm -rf /var/lib/apt/lists/*
-
-
+# Get filebot and install
+RUN wget -O /tmp/filebot.deb "https://www.filebot.net/download.php?mode=s&type=deb&arch=amd64"; \
+    dpkg -i /tmp/filebot.deb; \
+    rm /tmp/filebot.deb;
 
 ADD startup.sh /
-EXPOSE 22
-WORKDIR /
+
+VOLUME /config
+VOLUME /media
+VOLUME /watch
+
+# Set up unprivileged user
+RUN useradd -u 1000 -s /bin/bash docker
+USER docker
+ENV HOME /config
+
+
 ENTRYPOINT ["/startup.sh"]
