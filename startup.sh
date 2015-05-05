@@ -1,15 +1,13 @@
 #!/bin/bash
 
-filebot \
--script fn:amc \
---output "/media" \
---log-file /config/amc.log \
---def excludeList=/config/amc.txt \
---action duplicate \
--non-strict \
---conflict auto \
---def subtitles=en \
---def reportError=y \
---def clean=y \
---lang en
-"ut_dir=/watch" "ut_kind=multi"
+mkdir -p /config/scripts
+cp -u -p /filebot.sh /config/scripts/filebot.sh
+cp -u -p /postprocess.sh /config/scripts/postprocess.sh
+
+
+ inotifywait -m -q -e moved_to,create --format '%f' /watch | while read FILE
+ do
+   echo "something happened on path $FILE"
+   ./config/scripts/filebot.sh $FILE
+   ./config/scripts/postprocess.sh $FILE
+ done
