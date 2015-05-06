@@ -9,15 +9,18 @@ RUN wget -O /tmp/filebot.deb "https://www.filebot.net/download.php?mode=s&type=d
     rm /tmp/filebot.deb;
 
 ADD startup.sh /
+ADD filebot.sh /
+ADD postprocess.sh /
 
 VOLUME /config
 VOLUME /media
 VOLUME /watch
+VOLUME /downloads
 
-# Set up unprivileged user
-RUN useradd -u 1000 -s /bin/bash docker
-USER docker
-ENV HOME /config
+RUN mkdir -p /root/.java/.systemPrefs
+RUN mkdir /root/.java/.userPrefs
+RUN export JAVA_OPTS="-Djava.util.prefs.systemRoot=/root/.java Djava.util.prefs.userRoot=/root/.java/.userPrefs"
+
 
 
 ENTRYPOINT ["/startup.sh"]
