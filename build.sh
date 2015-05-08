@@ -1,4 +1,4 @@
 #!/bin/bash
-docker build --rm -t inkubux/docker-filebot .
+docker build --rm -t inkubux/filebot-inotify .
 
 
