@@ -22,5 +22,4 @@ RUN mkdir /root/.java/.userPrefs
 RUN export JAVA_OPTS="-Djava.util.prefs.systemRoot=/root/.java Djava.util.prefs.userRoot=/root/.java/.userPrefs"
 
 
-
 ENTRYPOINT ["/startup.sh"]
