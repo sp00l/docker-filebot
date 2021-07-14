@@ -1,4 +1,3 @@
 #!/bin/bash
-docker build --rm -t inkubux/filebot-inotify .
 
-
+docker build --rm -t sp00l/filebot-watcher .

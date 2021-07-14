@@ -14,7 +14,7 @@ Volumes:
 * **/watch**: in this path inotify will wait for any text file and will execute filebot  on the /downloads folder.
 * **/downloads**: This is where filebot will look for new content
 * **/media** : This is where filebot will place the file
-* **/config** : This is where filebot will place the his config files file.
+* **/data** : This is where filebot will place the his config files file.
   * amc-excludes.txt
   * amc.log
   * scripts/filebot.sh : The filebot script that will be executed. It can be modified, is so it won't be replaced.
